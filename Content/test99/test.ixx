@@ -1,0 +1,1 @@
+s.cssfilters='saturate(318%) ';s.xSize=84;s.ySize=84;s.xImage=54;s.yImage=61;s.xSkew=-33;s.ySkew=-33;s.shadows='1 0px 0px 16px 2px rgba(0,0,0,1)';s.xSizeSave=84;s.ySizeSave=84;s.zindex=500;s.src='http://optic.com/Content/test99/FACE.jpg';

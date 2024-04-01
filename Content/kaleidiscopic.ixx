@@ -1,0 +1,1 @@
+s.cssfilters='saturate(123%) ';s.vx=12;s.vy=2;s.shadows='1 0px 0px 16px 2px rgba(0,0,0,1)';s.zindex=500;s.src='http://optic.com/Content/_pUmnpil2e.png';s.xPixels=857;s.yPixels=525;

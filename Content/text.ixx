@@ -1,0 +1,1 @@
+s.media='file'; s.cssfilters='saturate(0%) brightness(143%) contrast(176%) '; s.useCanvas=0; s.xSize=38; s.ySize=20; s.xMove=-29.14999999999999; s.yMove=-34.1; s.maxx=1; s.maxy=1; s.frameColor='transparent'; s.Tiling='1,1,1,1,1,1'; s.tileType='Default'; s.maxzx=1; s.maxzy=1; s.maxvx=4; s.maxvy=4; s.zindex=501; s.src='../Content/Optic.htm'; s.xPixels=328; s.yPixels=105; 

@@ -5445,6 +5445,7 @@ this.expandScrambleTools(v,1);
 //this.expandOptionsTools(v,1);
 
 this.expandDebugTools(v,1);
+console.log("expandAll");
 
 }
 

@@ -2058,7 +2058,20 @@ if(gShowmenu){
 
 </SCRIPT>
 
+<script>
+	//on load
+	$(document).ready(function(){
+		console.log('rand - ' + Math.floor(Math.random() * 1000));
+		console.log(gMouseModeMenu)
 
+		//on ifraame click
+		$('IFRAME').click(function(){
+			console.log('iframe clicked')
+		})
+
+
+	});
+</script>
 
 
 

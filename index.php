@@ -104,23 +104,6 @@ $u="_pvt/_toolbar.php".$parms;
 ?>
 <IFRAME id='iframe' src='<?=$u;?>' frameborder='0' border='0' style='position:absolute;top:0px;left:0px;width:100%;height:100%;border:solid 0px #fff;'></IFRAME>
 
-
-
-<script>
-function getIframeContents() {
-  var iframes = document.getElementsByTagName('iframe');
-  for (var i = 0; i < iframes.length; i++) {
-    var iframe = iframes[i];
-    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-    var innerDoc = iframeDoc.documentElement.innerHTML;
-    console.log(innerDoc);
-  }
-}
-document.body.onclick = function() {
-  getIframeContents();
-}
-
-</script>
 </BODY>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

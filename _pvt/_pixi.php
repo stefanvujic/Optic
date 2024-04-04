@@ -9,6 +9,7 @@ include_once "_inc_global.php";
 <!-- <?=$gPage;?> -->
 <HTML lang="en">
 <HEAD>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="_pvt_js/util.js"></script>
 <script src="_pvt_js/_pixi.js"></script>
 
@@ -3044,11 +3045,11 @@ Toolbar.prototype.addLayer=function(dir,src,media){
 	switch(media){
 		case "image" :
 		case "file" :
-			src=getSrc(dir,src);
-			//msg("src="+src);
-			try{ parent.frames[0].selectCurrent(src); }catch(e){}
-			gPic.addScreen(null,media,dir);
-			gPic.screen.addImg(src,"",dir);
+			// src=getSrc(dir,src);
+			// //msg("src="+src);
+			// try{ parent.frames[0].selectCurrent(src); }catch(e){}
+			// gPic.addScreen(null,media,dir);
+			// gPic.screen.addImg(src,"",dir);
 			break;
 		case "video" :
 			//--- causes  problems but works :  1. clicking on the video is passed thru to the parent  2.saved in a config doesn't load properly
@@ -3550,6 +3551,7 @@ switch(n){
 		eval("scr.x"+nm+"="+(x*1)+"; scr.y"+nm+"="+(y*1)+";");
 		break;
 }
+
 return scr;
 }
 
@@ -3601,15 +3603,15 @@ _obj("iHideImageEye").src ="_pvt_images/"+((scr.hideImage)?"hideOff.png":"hideOn
 
 //--- sliders ---
 //this.setValNew("turnXY",Math.round((scr.vx/scr.maxvx)*100));
-this.setValNew("turnX",Math.round((scr.vx/scr.maxvx)*100));
-this.setValNew("turnY",Math.round((scr.vy/scr.maxvy)*100));
+this.setValNew("turnX",Math.round((scr.vx/scr.maxvx)*100)); // save gorizontal and vertical here (backend)
+this.setValNew("turnY",Math.round((scr.vy/scr.maxvy)*100)); // save gorizontal and vertical here (backend)
 this.setValNew("splZXY",scr.xWarp);
 this.setValNew("splZX",scr.xWarp);
 this.setValNew("splZY",scr.yWarp);
 this.setValNew("splXY",scr.xSplit);
 this.setValNew("splX",scr.xSplit);
 this.setValNew("splY",scr.ySplit);
-this.setValNew("imgXY",(scr.xImage));  
+this.setValNew("imgXY",(scr.xImage));  // (backend)
 this.setValNew("imgX",(scr.xImage));
 this.setValNew("imgY",(scr.yImage));
 this.setValNew("fldXY",scr.xFold);
@@ -3812,6 +3814,7 @@ this.setValNew("ixaxis",mx);
 this.setValNew("iyaxis",my);
 //if(scr.tileXY!=null)this.setValNew("tileXY",scr.tileXY);
 this.setValNew("zomXY",scr.xZoom); 
+// backend zoom set
 this.setValNew("zomX",scr.xZoom);
 this.setValNew("zomY",scr.yZoom);
 _obj("iFullWarp").checked=(scr.fullWarp)?true:false;
@@ -5406,12 +5409,13 @@ Toolbar.prototype.hideImage=function(v)    {
 
 
 Toolbar.prototype.setBlend=function(v){
-v=parseInt(v);
-var n=gBlends[v];
-if(n=="")n="none";
-_obj("iBlendName").innerHTML=n;
-//msg("blend v="+v+", n="+n);
-if(!this.syncing)this.setVars("blend",v,0,1);
+    v=parseInt(v);
+    var n=gBlends[v];
+    console.log('5411 - blend - ' + n)
+    if(n=="")n="none";
+    _obj("iBlendName").innerHTML=n;
+    //msg("blend v="+v+", n="+n);
+    if(!this.syncing)this.setVars("blend",v,0,1);
 }
 	
 
@@ -6409,7 +6413,6 @@ if(dopple && gPic.playing){
 }
 this.loadImage(images[ix],dopple);
 }
-
 
 
 </script>

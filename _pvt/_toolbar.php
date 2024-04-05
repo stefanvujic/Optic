@@ -462,6 +462,7 @@ var name="0_"+gNbrName;
 
 gPixi.gPic.savePicConfig(1,scrix);
 
+
 //--- get current time (video play) ----
 
 var play="101";
@@ -1997,7 +1998,7 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 <script>
 	//on load
 	$(document).ready(function(){
-		console.log(gPixi)
+		// console.log(gPixi.gToolbar)
 		// console.log random number
 		// console.log('rand - ' + Math.floor(Math.random() * 1000));
 		// console.log(gToolbar)

@@ -194,7 +194,7 @@ var gStartTimeTaken=Date.now()*1;
 
 window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
 console.trace();
-alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber + ' Column: ' + column + ' StackTrace: ' +  errorObj);
+console.log('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber + ' Column: ' + column + ' StackTrace: ' +  errorObj);
 }
 </SCRIPT>
 
@@ -3552,6 +3552,7 @@ switch(n){
 		break;
 }
 
+// console.log(scr)
 return scr;
 }
 
@@ -3821,6 +3822,7 @@ _obj("iFullWarp").checked=(scr.fullWarp)?true:false;
 _obj("iOffsetWarp").checked=(scr.offsetWarp)?true:false;
 _obj("iFullSplit").checked=(scr.fullSplit)?true:false;
 _obj("iOffsetSplit").checked=(scr.offsetSplit)?true:false;
+
 //var txt=zx+","+zy+"&nbsp;:&nbsp;"+xx+","+yy+"&nbsp;:&nbsp;"+mx+","+my;
 var txt=zx+","+zy+",";
 if(xx!=1 || yy!=1)txt+=xx+","+yy+",";

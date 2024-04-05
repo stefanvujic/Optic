@@ -4378,13 +4378,23 @@ for(var y=0;y<this.yyy;y++){
 
 }	}	
 
-//--- set blend etc. ---	
+    dbData = JSON.parse(sessionStorage.getItem("dbData"))
+    this.setBlend(dbData ? dbData.blend : 0);
 
-this.setBlend();
-
+    
 }
 
+$(document).ready(function(){
+    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){
+        sessionStorage.setItem("dbData", response)
 
+        if (sessionStorage.getItem("resets") < 1) {
+            sessionStorage.setItem("dbData", response)
+            sessionStorage.setItem("resets", sessionStorage.getItem("resets") + 1)
+            location.reload();
+        }
+    });
+});
 
 	
 
@@ -10254,21 +10264,76 @@ s.playing=(s.media=="video")?1:0;
 
 }
 
+function getSafe(fn, defaultVal) {
+	try {
+	  return fn();
+	} catch (e) {
+	  return defaultVal;
+	}
+  }
 
 
+// on document ready
+// $(document).ready(function(){
+// 	// get dbData
+// 	$.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){
+// 		sessionStorage.setItem("dbData", response)
+// 		document.cookie = "dbData=" + response + "; path=/";
 
+// 		if (sessionStorage.getItem("dbData") == false || getCookie("dbData") == false) {
+// 			sessionStorage.setItem("dbData", response)
+// 			document.cookie = "dbData=" + response + "; path=/";
+// 			location.reload();
+// 		}
+// 	});
+// })
 
 // NB: Changes made here (new variables!) must be also made to CopyScreen() and grabConfig()
 
 Config.prototype.setDefaults=function(){
+	// $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){
+	// 	// sessionStorage.setItem("dbData", response)
+	// 	// document.cookie = "dbData=" + response + "; path=/";
 
-var	dbData
-$.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){ 
-	sessionStorage.setItem("dbData", response)
-});
-dbData = JSON.parse(sessionStorage.getItem("dbData"))
-// console.log(dbData.blend)
+	// 	// if (sessionStorage.getItem("dbData") == false || getCookie("dbData") == false) {
+	// 	// 	sessionStorage.setItem("dbData", response)
+	// 	// 	document.cookie = "dbData=" + response + "; path=/";
+	// 	// 	location.reload();
+	// 	// }
+	// 	s.blend = response.blend ? response.blend : 0;
+	// });
+// create array of default values
 
+// $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){ 
+// 	sessionStorage.setItem("dbData", response)
+// 	dbData = response; 
+	// place in cookie
+	// document.cookie = "dbData=" + response + "; path=/";
+
+	// dbData = JSON.parse(sessionStorage.getItem("dbData"))
+// })
+
+// get session storage dbData
+// var dbData = JSON.parse(sessionStorage.getItem("dbData"))
+// set timeout to get dbData
+// setTimeout(function(){
+	// dbData = JSON.parse(sessionStorage.getItem("dbData"))
+	// if (sessionStorage.getItem("dbData") == false) {
+	// 	dbData = JSON.parse(sessionStorage.getItem("dbData"))
+	// 	console.log(dbData)
+	// 	// refresh page
+	// 	location.reload();
+	// }
+	// dbBlend = dbData.blend ? JSON.parse(sessionStorage.getItem("dbData")) : 0
+
+// }, 2000)
+// get cookie
+
+// refeash
+// console.log(dbData)
+// console.log(dbData.blend ? dbData.blend : 0)
+
+// get cookie
 var s=this;
 
 gPic.applyPattern(s);  				// sets tiling, zoom, fullwarp, offsetwarp, vx, vy, tileType and Tiling
@@ -10311,7 +10376,7 @@ s.applyDominantColor=0;
 
 s.applyVignetteColor=0;
 
-s.blend=dbData.blend;
+s.blend=0;
 
 s.xSize=100;
 
@@ -10748,7 +10813,6 @@ x+=
 ";";
 
 
-
 if(s.constructor.name=="Screen"){
 
 	x+=	"s.xPixels="+eleWidth(s.frame)+";"+	
@@ -10976,7 +11040,8 @@ return name;
 }
 
 
-
+// console.log(gPic)
+// console.log('wdwddd')
 
 
 //------------------- save filter ------------------------  

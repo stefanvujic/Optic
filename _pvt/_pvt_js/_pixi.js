@@ -4379,9 +4379,9 @@ for(var y=0;y<this.yyy;y++){
 }	}	
 
     //save data (put in a function on save button click)
-    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, saveData: 1, project_data: this.src}, function(response){
-        response ? console.log("Data saved") : console.log("Error saving data")
-    });
+    // $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, saveData: 1, project_data: this.src}, function(response){
+    //     response ? console.log("Data saved") : console.log("Error saving data")
+    // });
 
     dbData = JSON.parse(sessionStorage.getItem("dbData"))
     this.setBlend(dbData ? dbData.blend : 0);
@@ -4389,8 +4389,9 @@ for(var y=0;y<this.yyy;y++){
     
 }
 
+
 $(document).ready(function(){
-    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1}, function(response){
+    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, project_id: 1}, function(response){
         sessionStorage.setItem("dbData", response)
 
         if (sessionStorage.getItem("resets") < 1) {
@@ -4400,6 +4401,16 @@ $(document).ready(function(){
         }
     });
 });
+
+
+function saveData() {
+    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, saveData: 1, project_data: this.src}, function(response){
+        response ? console.log("Data saved") : console.log("Error saving data")
+    });
+}
+
+
+
 
 	
 

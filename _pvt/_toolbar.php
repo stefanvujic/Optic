@@ -52,7 +52,30 @@ $paneldividerdisplay="block";
 
 <script src="_pvt_js/util.js"></script>
 
-
+<style>
+	#save-project {
+		border: 0;
+		outline: 0;
+		cursor: pointer;
+		color: white;
+		background-color: rgb(84, 105, 212);
+		box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+		border-radius: 4px;
+		font-size: 14px;
+		font-weight: 500;
+		padding: 4px 8px;
+		display: inline-block;
+		min-height: 19px;
+		transition: background-color .24s,box-shadow .24s;
+		height: 22px;
+    	font-size: 13px;
+		right: 60%;
+    	position: relative;
+		:hover {
+			box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+		}
+	} 
+</style>
 
 <SCRIPT>
 
@@ -385,8 +408,37 @@ return gLoginDir;
 
 
 function login(){
+	// <style>
+	// 	resize: none;
+	// 	display: block;
+	// 	border: 1px solid black;
+	// 	padding: 10px;
+	// 	background: moccasin;
+	// 	color: rgb(85, 85, 85);
+	// 	position: absolute;
+	// 	z-index: 9991;
+	// 	left: 250px;
+	// 	top: 80px;
+	// 	width: 370px;
+	// 	height: 300px;
+	// </style>
 
 openPopup("util","_newutil.php?page=login&dir="+gDir,"Login");
+
+
+
+// <div id="iWindow1" class="corners8 slideBg ui-resizable ui-draggable ui-draggable-handle" style="resize: none; display: block; border: 1px solid black; padding: 10px; background: moccasin; color: rgb(85, 85, 85); position: absolute; z-index: 9991; left: 250px; top: 80px; width: 370px; height: 300px;">
+// 	<table border="0" cellpadding="0" cellspacing="0" style="resize:none;width:100%;height:100%;">
+// 		<tbody>
+// 			<tr id="iWindowToolbar1" style="height:34px;border-bottom:solid 0px black;color:white;overflow:hidden;cursor:move;">
+// 				<td id="iWindowTitle1" align="left" style="color:#555555;cursor:move;font-size:22pt;letter-spacing:2px;padding-left:15px;position:relative;top:-2px;">Login</td>
+// 				<td align="right" valign="top"><table border="0" id="iWinBtns1" class="slideOpacity" cellpadding="0" cellspacing="0"><tbody><tr>
+// 				<td width="34"><img id="iWinHide1" onclick="hideWindow(1)" src="_pvt_images/folders/toggle_minimize.png" style="display:none;width:28px;cursor:pointer;position:relative;top:0px;left:0px;"></td>
+// 				<td width="34"><img id="iWinToggle1" onclick="expandWindow(1)" src="_pvt_images/folders/toggle_expand.png" style="display:none;width:28px;cursor:pointer;position:relative;top:0px;left:0px;"></td>
+// 				<td width="34"><img onclick="closeWindow(1)" src="_pvt_images/close.png" style="width:26px;cursor:pointer;position:relative;top:0px;left:0px;"></td>
+// 			</tr>
+// 		</tbody></table></td></tr><tr><td colspan="2" id="iWindowBox1" style="resize:none;border:solid 1px #aaaaaa; background:white;">
+// 		</td></tr></tbody></table><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-s" style="z-index: 90;"></div><div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se" style="z-index: 90;"></div></div>
 
 }
 
@@ -1745,7 +1797,7 @@ for($tmp=0;$tmp<4;$tmp++){
 				wrt("<IMG id=iLoginBtn    src='_pvt_images/logout.png'  onclick='login()'  style='".(($gLoggedIn)?"display:none;":"").";position:relative;top:1px;cursor:pointer;width:20px;height:20px;padding-left:1px;' onmouseover='moLoginBtns(this,1)' onmouseout='moLoginBtns(this,0)' title='login'>");
 
 			wrt("</td>");
-
+	
 	 		wrt("<td style='width:13px;'></td>");
 
 	 		wrt("<td id=iPopupMenuBtn style='".getDisplayStyle($showupdsettings)."' ><IMG class=c_barbtn src='_pvt_images/add_new.png' onclick='gAddMenu.clickMenuBtn(this)' style='position:relative;top:1px;left:0px;height:16px;width:16px;opacity:0.8;' title='add NEW'></td>");
@@ -1761,7 +1813,7 @@ for($tmp=0;$tmp<4;$tmp++){
 		 	//wrt("<td style='width:10px;'></td>");
 
 			wrt("<td><IMG class=c_barbtn src='_pvt_images/home.png' onclick='loadHome()' title='go home' style='position:relative;top:2px;width:18px;height:18px;'></td>");
-
+		
 		wrt("</tr></TABLE>");
 
 		//<!-- ================== END ADMIN BUTTONS =================== -->
@@ -1769,8 +1821,8 @@ for($tmp=0;$tmp<4;$tmp++){
 	 
 
 	 wrt("</td>");
-
-	 wrt("<td style='width:70px;'></td>");
+	
+	 wrt("<td style='width:70px;'><button onclick='saveData();' id='save-project'>Save</button></td>");
 
 
 

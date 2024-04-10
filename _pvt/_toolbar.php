@@ -20,6 +20,8 @@ if(!empty($action)||!empty($dir))$parms="?dir=$dir&action=$action&autoload=yes";
 
 else $parms="?autoload=yes";
 
+// echo $parms; // something weird is happening here, the page sometimes loads as a blank page over https
+
 $defpixi=myGet('defpixi');
 
 $gMenuWidth=140;
@@ -1590,7 +1592,7 @@ var txt="<table class='c_popuptable'>"+
  "<tr id=iNewFileItem style='"+getDisplayStyle(gShownewfile)+"'><td "+movers+" style='cursor:pointer;' onclick='newText(null);gAddMenu.hideMenu()'>&nbsp;&nbsp;New Text</td></tr>"+
 
 "</table>";
-console.log(gShowupload)
+// console.log(gShowupload)
 m.div.innerHTML=txt;
 
 }
@@ -1822,7 +1824,7 @@ for($tmp=0;$tmp<4;$tmp++){
 
 	 wrt("</td>");
 	
-	 wrt("<td style='width:70px;'><button onclick='saveData();' id='save-project'>Save</button></td>");
+	 wrt("<td style='width:70px;'><button id='save-project'>Save</button></td>");
 
 
 
@@ -2048,30 +2050,33 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 
 ?>
 <script>
-	//on load
 	$(document).ready(function(){
-		// console.log(gPixi.gToolbar)
-		// console.log random number
-		// console.log('rand - ' + Math.floor(Math.random() * 1000));
-		// console.log(gToolbar)
-		// gToolbar.expandBox('iColor');
-		// gToolbar.expandBox('iSize');
-		// gToolbar.expandBox('iRotate');
-		// gToolbar.expandBox('iCrop');
-		// gToolbar.expandBox('iText');
-		// gToolbar.expandBox('iShadow');
-		// gToolbar.expandBox('iBorder');
-		// gToolbar.expandBox('iFrame');
-		// gToolbar.expandBox('iFilter');
-		// gToolbar.expandBox('iEffects');
-		// gToolbar.expandBox('iLayers');
-		// gToolbar.expandBox('iHistory');
-		// gToolbar.expandBox('iHelp');
-		// gToolbar.expandBox('iColors');
-		// gToolbar.expandBox('iBlend');
-		// gToolbar.expandBox('iColor');
-		// gToolbar.expandBox('iSize');
+		$.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, project_id: 1}, function(response){
+			sessionStorage.setItem("dbData", response)
+			// check if theres dbData in session storage
+			if (sessionStorage.getItem("dbData")) {
+				if (sessionStorage.getItem("resets") < 1) {
+					sessionStorage.setItem("dbData", response)
+					sessionStorage.setItem("resets", sessionStorage.getItem("resets") + 1)
+					location.reload();
+				}
+			}
+		});
 	});
+	$('#save-project').click(function(){
+		var blend = sessionStorage.getItem('blend');
+
+		var cssFilters = sessionStorage.getItem('cssFilters');
+		var opacity2 = sessionStorage.getItem('opacity2');
+
+		var maskOn = sessionStorage.getItem('maskOn'); // fix this
+		var maskType = sessionStorage.getItem('maskType');
+		var maskDir = sessionStorage.getItem('mdir');
+		var mstart = sessionStorage.getItem('mstart');
+		var mblur = sessionStorage.getItem('mblur');
+
+		// console.log(sessionStorage)
+	})
 </script>
 </BODY>
 
@@ -2115,12 +2120,11 @@ if(gShowmenu){
 	//on load
 	$(document).ready(function(){
 		console.log('rand - ' + Math.floor(Math.random() * 1000));
-		console.log(gMouseModeMenu)
 
 		//on ifraame click
-		$('IFRAME').click(function(){
-			console.log('iframe clicked')
-		})
+		// $('IFRAME').click(function(){
+		// 	console.log('iframe clicked')
+		// })
 
 
 	});

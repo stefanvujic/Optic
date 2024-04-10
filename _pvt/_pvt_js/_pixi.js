@@ -999,15 +999,17 @@ if(a[0]=="")a[0]="|||";
 var b=a[0].split("|||");
 
 var ix=this.imgix;
+var counter = 0;
 
 for(var i=0;i<b.length-1;i++){
 
  	if(b[i]){
-
-  		cfig=new Config(b[i]);
+		cfig=new Config(b[i]);
+		if (counter > 0) {
+			cfig.src = 'https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/Content/0_210171.png' // (backend)
+		}
 
  	}else{
-
   		cfig=new Config(null,null,null,null,null,this.gDir,this.images,ix);
 
   		ix++;
@@ -1016,15 +1018,21 @@ for(var i=0;i<b.length-1;i++){
 
  	}
 
+	// cfig.src = 'https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/Content/0_210171.png'
+
  	this.addNewScreen(cfig);
 
  	var scr=this.screen;
+	// console.log(scr.src = 'https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/Content/0_210171.png')
 
  	this.events(scr);
 
 	this.calcLTWH(this.scrix);
 
+	// console.log(scr.src)
  	scr.loadImage(scr.src);
+
+	counter++;
 
 }
 
@@ -1079,7 +1087,7 @@ var tiletype    =this.getTileType(typ);
 var tiling      =null;
 
 cfig=new Config("",tiletype,tiling,typ,media,dir,images,imgix); 
-
+// console.log(cfig)
 this.addNewScreen(cfig);
 
 var scr=this.screen;
@@ -1699,7 +1707,6 @@ Picture.prototype.orientationVar=function(n){
 Picture.prototype.colorVar=function(n){
 
 	var names=",contrast,brightness,saturate,blur,sepia,hue-rotate,grayscale,invert,";
-
 	if(_in(names,","+n+","))return 1;
 
 	return 0;
@@ -2121,7 +2128,7 @@ for(var i=0;i<a.length;i++){
 	 if(a[i]){
 
 		  if(_in(a[i],f)){ 
-
+			
 			  if( (v=="100" && (f=="saturate" || f=="brightness" || f=="contrast")) ||
 
 				  (v=="0"   && (f!="saturate" && f!="brightness" && f!="contrast")) ){
@@ -2130,7 +2137,7 @@ for(var i=0;i<a.length;i++){
 
 			  }else{
 
-			  	 txt+=filter+" "; 
+			  	 txt+=filter+" ";
 
 			  }
 
@@ -2149,16 +2156,13 @@ else if(!filterFound)txt+=filter;
 //msg("apply="+txt);
 
 if(filters!=txt){
-
 	this.saveDoneStuff("gPic.viewCSSFilters('"+filters+"');gPic.viewCSSFilters('"+txt+"');");
-
+	sessionStorage.setItem('cssFilters', txt)
 }
 
 obj.viewCSSFilters(txt);
 
 }
-
-
 
 Picture.prototype.viewOpacity2=function(x,noapply){ 
 
@@ -4390,24 +4394,12 @@ for(var y=0;y<this.yyy;y++){
 }
 
 
-$(document).ready(function(){
-    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, project_id: 1}, function(response){
-        sessionStorage.setItem("dbData", response)
 
-        if (sessionStorage.getItem("resets") < 1) {
-            sessionStorage.setItem("dbData", response)
-            sessionStorage.setItem("resets", sessionStorage.getItem("resets") + 1)
-            location.reload();
-        }
-    });
-});
-
-
-function saveData() {
-    $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, saveData: 1, project_data: this.src}, function(response){
-        response ? console.log("Data saved") : console.log("Error saving data")
-    });
-}
+// function saveData() {
+//     $.post('https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php', {user: 1, saveData: 1, project_data: this.src}, function(response){
+//         // response ? console.log("Data saved") : console.log("Error saving data")
+//     });
+// }
 
 
 
@@ -4887,7 +4879,10 @@ this.calcSpecs();
 //msg("REPAINT f="+this.cssfilters);  //viewCSSFilters
 
 this.div.style.webkitFilter   =this.div.style.filter   =this.cssfilters;
-
+dbData = JSON.parse(sessionStorage.getItem("dbData"))
+if (dbData.css_filters) {
+	this.cssfilters = dbData.css_filters // (backend)
+}
 this.frame.style.webkitFilter =this.frame.style.filter =this.cssfilters;
 
 if(this.hideScr){this.hideScr.frame.style.display="none";this.hideScr=null;}
@@ -7506,7 +7501,7 @@ else this.blend=i;
 
 var b=gBlends[i];
 
-//this.frame.style.isolation="auto";
+sessionStorage.setItem('blend', i);
 
 this.frame.style.mixBlendMode=b;
 
@@ -7665,8 +7660,10 @@ if(noapply!=1)setOpacity(this.frame,x*99);
 Screen.prototype.viewOpacity2=function(x,noapply){ //we need to call this 'view..' to make undo/redo work (trust me!)
 
 this.opacity2=x;
-
-if(noapply!=1)setOpacity(this.div,x*99);
+sessionStorage.setItem('opacity2', x);
+// get opacity from the session storage
+var opacity2 = sessionStorage.getItem('opacity2') ? sessionStorage.getItem('opacity2') : 1;
+if(noapply!=1)setOpacity(this.div,opacity2*99);
 
 }
 
@@ -9457,6 +9454,7 @@ if(this.box.screen.media!="image"){
 		   var ok=1;
 
 		   var tmpsrc=(this.box.screen.media=="video")?"@vid@"+src:src;
+		//    console.log(this.divimgSrc);
 
 		   try{
 
@@ -9467,7 +9465,6 @@ if(this.box.screen.media!="image"){
 		   }catch(e){ok=0; }
 
 		   if(ok){
-
 			    this.divimgUrl=this.divimgUrl.replace(this.divimgSrc,src);
 
 			    this.divimgSrc=src;
@@ -10482,13 +10479,17 @@ s.ySkew=0;
 
 s.MaskOn=0;
 
-s.maskType=1;
+maskType = sessionStorage.getItem("maskType");
+s.maskType = maskType ? maskType : 1;
 
-s.maskDirection=0;
+maskDir = sessionStorage.getItem("mdir");
+s.maskDirection = maskDir ? maskDir : 0;
 
-s.maskStart=40;
+mstart = sessionStorage.getItem("mstart");
+s.maskStart = mstart ? mstart : 40;
 
-s.maskBlur=20;
+mblur = sessionStorage.getItem("mblur");
+s.maskBlur = mblur ? mblur : 20;
 
 s.maskRed	=0;
 
@@ -13427,7 +13428,6 @@ History.prototype.prt=function(a){
 
 
 History.prototype.cssFilter=function(v){
-
 if( _in(v,"'saturate'") || _in(v,"'contrast'") || _in(v,"'blur'") || _in(v,"'hue-rotate'") || _in(v,"'grayscale'") || _in(v,"'sepia'") || _in(v,"'brightness'") )return 1;
 
 return 0;

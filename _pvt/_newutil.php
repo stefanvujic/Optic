@@ -649,10 +649,6 @@ if($success!=""){
     $(".login-fields").hide();
     $(".register-fields").show();
   });
-
-  
-
-  
 </script>
 <?
 

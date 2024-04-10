@@ -3069,7 +3069,8 @@ Toolbar.prototype.addLayer=function(dir,src,media){
 Toolbar.prototype.addImageLayer=function(typ){
 if(!typ)typ="";
 gPic.addScreen(typ);
-gPic.screen.loadImage();
+gPic.screen.loadImage(); // backend
+// console.log(gPic.screen.src)
 }
 
 
@@ -4560,29 +4561,43 @@ this.syncing=tmpsync;
 //=============  MASK =============  
 
 Toolbar.prototype.flipMask=function(){
-var on	=(_obj("mskON").checked)?1:0;
-gPic.screen.MaskOn	=on;
-gPic.screen.paint();
+    var on	=(_obj("mskON").checked)?1:0;
+    gPic.screen.MaskOn	=on;
+    gPic.screen.paint();
+
+    sessionStorage.setItem("maskOn", on);
 }
+
+
 
 Toolbar.prototype.chgMask=function(){
 if(this.syncing)return;
-var scr		=gPic.screen;
-var on		=(_obj("mskON").checked)?1:0;
-var typ		=this.maskType();
-var mdir	=this.maskDir();
-var mstart	=_obj("mskStart").value*1;
-var blur	=_obj("mskBlur").value*1;
-scr.MaskOn	=on;
-scr.maskType=typ;
-scr.maskDirection=mdir;
-scr.maskRed		=_obj("mskRed").value*1;
-scr.maskGreen	=_obj("mskGreen").value*1;
-scr.maskBlue	=_obj("mskBlue").value*1;
-scr.maskSolid	=(_obj("mskSolid").checked)?1:0;
-scr.maskSolidAlpha	=_obj("mskSolidAlpha").value*1;
-this.setVars("mask",mstart,blur,1);	
-if(scr.MaskOn)scr.paint();
+    var scr		=gPic.screen;
+    var on		=(_obj("mskON").checked)?1:0;
+
+    var typ		=this.maskType();
+    sessionStorage.setItem("maskType", this.maskType());
+    
+    var mdir	=this.maskDir();
+
+    var mstart	=_obj("mskStart").value*1;
+    sessionStorage.setItem("mstart", mstart);
+
+    var blur	=_obj("mskBlur").value*1;
+    sessionStorage.setItem("mblur", blur);
+
+    scr.MaskOn	=on;
+    scr.maskType=typ;
+    scr.maskDirection=mdir;
+    sessionStorage.setItem('mdir', mdir);
+    
+    scr.maskRed		=_obj("mskRed").value*1;
+    scr.maskGreen	=_obj("mskGreen").value*1;
+    scr.maskBlue	=_obj("mskBlue").value*1;
+    scr.maskSolid	=(_obj("mskSolid").checked)?1:0;
+    scr.maskSolidAlpha	=_obj("mskSolidAlpha").value*1;
+    this.setVars("mask",mstart,blur,1);	
+    if(scr.MaskOn)scr.paint();
 }
 
 Toolbar.prototype.maskType=function() {
@@ -5413,7 +5428,7 @@ Toolbar.prototype.hideImage=function(v)    {
 Toolbar.prototype.setBlend=function(v){
     v=parseInt(v);
     var n=gBlends[v];
-    console.log('5411 - blend - ' + n)
+    // console.log('5411 - blend - ' + n)
     if(n=="")n="none";
     _obj("iBlendName").innerHTML=n;
     //msg("blend v="+v+", n="+n);
@@ -5584,6 +5599,7 @@ var tmp=scr.src;
 if(scr.media=="video")tmp="@vid@"+tmp;
 try{ parent.frames[0].selectCurrent(tmp); }catch(e){}   // hilite the thumb
 }
+
 
 
 //---------------- apply label -----------------  
@@ -6153,31 +6169,33 @@ gPic.deleteScreen(scr1.scrix);
 //---------------------- gotoImg -------------------------- 
 // finds a screen with the correct media
 function gotoImg(src,title,dir){
-var oldScrix=gPic.scrix;
-if(dir==null)dir="";
-var media=_fileType(src.toLowerCase());
-//---- colorPicker? ----
-if(media=="image"){
-	if(gPic.gOpenPopup=="colorpicker"){
-	    gPic.openColorPicker(gPic.colorPickerID,src);
-		return 0; // 0 prevents thumb being selected
-	}
-}
-//------ right media ------
-if(gPic.screen.media==media){
-	return gPic.screen.addImg(src,title,dir,gPic.dopple);
-}
-//------ wrong media so find a screen -------------
-for(var i=0; i<gPic.screens.length;i++){
-	if(gPic.screens[i].DELETED)continue;
-	if(gPic.screens[i].media==media && !gPic.screens[i].hideImage){
-		gToolbar.changeScreen(i);
-		return gPic.screens[i].addImg(src,title,dir);
-}	}
-//------ no suitable screen found so add a new one -------
-gPic.addScreen(null,media,dir);
-gToolbar.setPlayPauseBtn(gPic.playing);
-return gPic.screen.addImg(src,title,dir);
+    // src = '../Content/0_210171.png'
+    var oldScrix=gPic.scrix;
+    if(dir==null)dir="";
+    var media=_fileType(src.toLowerCase());
+    //---- colorPicker? ----
+    if(media=="image"){
+        if(gPic.gOpenPopup=="colorpicker"){
+            // console.log(src)
+            gPic.openColorPicker(gPic.colorPickerID,src);
+            return 0; // 0 prevents thumb being selected
+        }
+    }
+    //------ right media ------
+    if(gPic.screen.media==media){
+        return gPic.screen.addImg(src,title,dir,gPic.dopple);
+    }
+    //------ wrong media so find a screen -------------
+    for(var i=0; i<gPic.screens.length;i++){
+        if(gPic.screens[i].DELETED)continue;
+        if(gPic.screens[i].media==media && !gPic.screens[i].hideImage){
+            gToolbar.changeScreen(i);
+            return gPic.screens[i].addImg(src,title,dir);
+    }	}
+    //------ no suitable screen found so add a new one -------
+    gPic.addScreen(null,media,dir);
+    gToolbar.setPlayPauseBtn(gPic.playing);
+    return gPic.screen.addImg(src,title,dir);
 }
 
 
@@ -6213,6 +6231,7 @@ if(img){
 //--- new image so load it ---
 scr.loadImage(src,dopple);
 gToolbar.viewImage();
+// console.log(src)
 return 1;
 }
 
@@ -6220,71 +6239,71 @@ return 1;
 
 //--------------------------- loadImage ---------------------------------------- 
 Screen.prototype.loadImage=function(src,dopple){
-//msg("loadImage");
-if(dopple==null)dopple=0;
-if(dopple){
-	if(gPic.makeDopple(this.scrix,src))return;
-}
-//--------------
-if(this.imgix > gPic.images.length-1)this.imgix=0;	
-if(src==null)src=gPic.images[this.imgix];
-if(this.oldsrc==null)this.oldsrc=src;
-this.history.recordAction("s.loadImage('"+src+"',"+dopple+");");
-this.src=src;
-this.media=_fileType(src.toLowerCase());
-if(this.media=="folder")this.media="image";
-src=_fileUrl(src);
-try{ parent.frames[0].selectCurrent(src); }catch(e){}  
-var lc=src.toLowerCase();
-var w,h;
-w=this.divW;
-h=this.divH;
-//------- VIDEO --------
-if(this.media=="video"){
-	 var i;
-	 src=_rep(src,"http://www.youtube.com/embed/","");
-	 src=_rep(src,"http://www.youtu.be/embed/","");
-	 src=_rep(src,"http://www.youtube.com/watch?v=","");
-	 i=_ix(src,"&v="); if(i!=-1)src=src.substring(i+3);
-	 i=_ix(src,"?v="); if(i!=-1)src=src.substring(i+3);
-	 i=_ix(src,"?");   if(i!=-1)src=src.substring(0,i);
-	 i=_ix(src,"&");   if(i!=-1)src=src.substring(0,i);
-	 src=src.replace("@vid@","");
-	 try{ parent.frames[0].selectCurrent("@vid@"+src); }catch(e){}  
-}
-this.src=src;
-//------ OTHER MEDIA -------
-if(this.media!="image"){
- 	if(!this.gImg)this.gImg=new Image();
- 	switch(this.media){
-  		case "video" : this.gImg.src="_pvt_images/videos.png";   break;
-  		case "file"  : this.gImg.src="_pvt_images/text.png"; 	 break;
-  		default      : this.gImg.src="_pvt_images/new_link.png"; break;
- 	}
- 	this.repaint();
-	gToolbar.syncControls();
- 	return 1;
-}
-//----- IMAGES -------
-var img;
-for(var i=0;i<this.picture.imgobjects.length;i++){
-	 var longsrc=_rep(src,"../",gRoot);
-	 if(longsrc==this.picture.imgobjects[i].src){
-	 	img=this.picture.imgobjects[i];
-		break;
-	 }
-}
-//---- IMAGE FOUND ----
-if(img){
-	 this.gImg=img;
-	 gPic.addEvents(this.gImg,src,this);
-	 return;
-}
-//---- NEW IMAGE -----
-img=this.picture.imgobjects[this.picture.imgobjects.length]=new Image();  
-this.gImg=img;
-gPic.addEvents(this.gImg,src,this);
-return 1;
+    if(dopple==null)dopple=0;
+    if(dopple){
+        if(gPic.makeDopple(this.scrix,src))return;
+    }
+    //--------------
+    if(this.imgix > gPic.images.length-1)this.imgix=0;	
+    if(src==null)src=gPic.images[this.imgix];
+    if(this.oldsrc==null)this.oldsrc=src;
+    this.history.recordAction("s.loadImage('"+src+"',"+dopple+");");
+    this.src=src;
+    this.media=_fileType(src.toLowerCase());
+    if(this.media=="folder")this.media="image";
+    src=_fileUrl(src);
+    try{ parent.frames[0].selectCurrent(src); }catch(e){}  
+    var lc=src.toLowerCase();
+    var w,h;
+    w=this.divW;
+    h=this.divH;
+    //------- VIDEO --------
+    if(this.media=="video"){
+        var i;
+        src=_rep(src,"http://www.youtube.com/embed/","");
+        src=_rep(src,"http://www.youtu.be/embed/","");
+        src=_rep(src,"http://www.youtube.com/watch?v=","");
+        i=_ix(src,"&v="); if(i!=-1)src=src.substring(i+3);
+        i=_ix(src,"?v="); if(i!=-1)src=src.substring(i+3);
+        i=_ix(src,"?");   if(i!=-1)src=src.substring(0,i);
+        i=_ix(src,"&");   if(i!=-1)src=src.substring(0,i);
+        src=src.replace("@vid@","");
+        try{ parent.frames[0].selectCurrent("@vid@"+src); }catch(e){}  
+    }
+    this.src=src;
+    //------ OTHER MEDIA -------
+    if(this.media!="image"){
+        if(!this.gImg)this.gImg=new Image();
+        switch(this.media){
+            case "video" : this.gImg.src="_pvt_images/videos.png";   break;
+            case "file"  : this.gImg.src="_pvt_images/text.png"; 	 break;
+            default      : this.gImg.src="_pvt_images/new_link.png"; break;
+        }
+        this.repaint();
+        gToolbar.syncControls();
+        return 1;
+    }
+    //----- IMAGES -------
+    var img;
+    for(var i=0;i<this.picture.imgobjects.length;i++){
+        var longsrc=_rep(src,"../",gRoot);
+        
+        if(longsrc==this.picture.imgobjects[i].src){
+            img=this.picture.imgobjects[i];
+            break;
+        }
+    }
+    //---- IMAGE FOUND ----
+    if(img){
+        this.gImg=img;
+        gPic.addEvents(this.gImg,src,this);
+        return;
+    }
+    //---- NEW IMAGE -----
+    img=this.picture.imgobjects[this.picture.imgobjects.length]=new Image();  
+    this.gImg=img;
+    gPic.addEvents(this.gImg,src,this); // (backend) change src
+    return 1;
 }
 
 
@@ -6415,8 +6434,6 @@ if(dopple && gPic.playing){
 }
 this.loadImage(images[ix],dopple);
 }
-
-
 </script>
 
 

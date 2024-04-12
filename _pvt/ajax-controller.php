@@ -80,8 +80,24 @@ switch ($request) {
         exit();
     break;
 
+    case 'updateProject':
+        $is_correct_token = checkToken($con, $_POST['token']);
+        if($is_correct_token) {
+            $sql = "UPDATE projects SET name = ?, description = ?, status = ? WHERE id = ?";
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("ssss", $_POST['name'], $_POST['description'], $_POST['status'], $_POST['id']);
+            $stmt->execute();
+            $data = ['success' => 'Project Updated'];
+        }else {
+            $data = ['error' => 'Invalid Token'];
+        }
+
+        echo json_encode($data);
+        exit();
+
 }
 
+// $_POST['user_id'] = 1;
 // if (isset($_POST['getProjects'])) {
 //     $sql = "SELECT * FROM projects WHERE user_id = ?";
 //     $stmt = $con->prepare($sql);

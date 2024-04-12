@@ -1006,7 +1006,7 @@ for(var i=0;i<b.length-1;i++){
  	if(b[i]){
 		cfig=new Config(b[i]);
 		if (counter > 0) {
-			cfig.src = 'https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/Content/0_210171.png' // (backend)
+			cfig.src = 'https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/Content/0_210171.png' // (backend) get the image from the db, count layers etc... This loops layers
 		}
 
  	}else{
@@ -1031,6 +1031,7 @@ for(var i=0;i<b.length-1;i++){
 
 	// console.log(scr.src)
  	scr.loadImage(scr.src);
+	
 
 	counter++;
 
@@ -4970,7 +4971,9 @@ for(var y=0;y<this.yyy;y++){
 } }
 
 
-
+// this.MaskOn = 1 see why this doesnt work (backend)
+// this.MaskOn = 1
+// click button iMenuControlsBtn
 if(this.MaskOn || this.ColorRgbOn || this.SwapCsOn || this.SwapPixelsOn || this.PosterizeOn){
 
 	this.applyPixelMasks();
@@ -5016,8 +5019,6 @@ if(this.FillColorOn){
 
 
 //======================== PIXELS ================================
-
-
 
 //--------- applyPixelMasks ------------
 
@@ -5578,9 +5579,7 @@ ctx.putImageData(this.boxdata, 0, 0);
 Box.prototype.applyPixels=function(scr,xred,r,g,b,scr2){
 
 //----- Posterize ---
-
 if(scr.PosterizeOn){
-
 	var rgba = this.posterizeEffect(r,g,b,scr.PosterizeRadius,scr.PosterizeIntensity);
 
 	r=this.boxdata.data[xred]=rgba[0]; g=this.boxdata.data[xred+1]=rgba[1]; b=this.boxdata.data[xred+2]=rgba[2];	

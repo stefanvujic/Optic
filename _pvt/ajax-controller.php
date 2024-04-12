@@ -94,6 +94,23 @@ switch ($request) {
 
         echo json_encode($data);
         exit();
+    break;
+
+    case 'deleteProject':
+        $is_correct_token = checkToken($con, $_POST['token']);
+        if($is_correct_token) {
+            $sql = "DELETE FROM projects WHERE id = ?";
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("s", $_POST['id']);
+            $stmt->execute();
+            $data = ['success' => 'Project Deleted'];
+        }else {
+            $data = ['error' => 'Invalid Token'];
+        }
+
+        echo json_encode($data);
+        exit();
+    break;
 
 }
 

@@ -55,7 +55,7 @@ $paneldividerdisplay="block";
 <script src="_pvt_js/util.js"></script>
 
 <style>
-	#save-project {
+	#save-project, #view-projects {
 		border: 0;
 		outline: 0;
 		cursor: pointer;
@@ -76,7 +76,19 @@ $paneldividerdisplay="block";
 		:hover {
 			box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
 		}
+        cursor: pointer !important;
 	} 
+	#view-projects {
+		right: 61px;
+	}
+	#iPlayBack {
+		position: relative;
+		top: -2px;
+		width: 18px;
+		cursor: pointer;
+		background: #ffffff;
+		opacity: 0.7;
+	}
 </style>
 
 <SCRIPT>
@@ -425,7 +437,14 @@ function login(){
 	// 	height: 300px;
 	// </style>
 
-openPopup("util","_newutil.php?page=login&dir="+gDir,"Login");
+	let isLoggedIn = sessionStorage.getItem("is_logged_in");
+	console.log(isLoggedIn)
+	
+	if(isLoggedIn) {
+		logout();
+	}else{
+		openPopup("util","_newutil.php?page=login&dir="+gDir,"Login");
+	}
 
 
 
@@ -448,7 +467,7 @@ openPopup("util","_newutil.php?page=login&dir="+gDir,"Login");
 
 function logout(){
 
-openPopup("util","_newutil.php?page=logout&dir="+gDir,"Logout");
+// openPopup("util","_newutil.php?page=logout&dir="+gDir,"Logout");
 
 }
 
@@ -1825,12 +1844,37 @@ for($tmp=0;$tmp<4;$tmp++){
 	 wrt("</td>");
 	
 	 wrt("<td style='width:70px;'><button id='save-project'>Save</button></td>");
+	 wrt("<td style='width:70px;'><button id='view-projects'>Projects</button></td>");
+	 
+
+	?>
+	
+	<td style='white-space: nowrap; position: relative; left: -45px; font-weight: bold;' style='width:50px;'><p id='user-greeting'></p></td>
+
+	<script>
+
+		$(document).ready(function() {
+            console.log('ready')
+            var user = JSON.parse(sessionStorage.getItem('user_data'));
+            
+			if (user) {
+                console.log(user)
+
+				name = user.name;
+				$('#user-greeting').text('Hello ' + name)
+			}
+		});
+	</script>
+	<?php
 
 
+// echo "<td style='width:50px;'><p style='font-weight: bold;' id='user-greeting'>Hello</p></td>";
+// echo "<td style='width:22px;'><p style='font-weight: bold;' id='user-greeting'>Stefan</p></td>";
+// echo "<td style='width:22px;'><p style='font-weight: bold;' id='user-greeting'>Vujic</p></td>";
 
 	 // ========================= PLAY BUTTONS ==========================
 
-	 wrt("<td align=center>");
+	 wrt("<td style='position: relative; right: 15%;' align=center>");
 
 	 ?>
 
@@ -2077,6 +2121,8 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 
 		// console.log(sessionStorage)
 	})
+
+	
 </script>
 </BODY>
 
@@ -2090,13 +2136,16 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 
 ?>
 
-
+<script>
+	function logout() {
+		if (sessionStorage.getItem("is_logged_in")) {
+		sessionStorage.clear();
+		window.top.location.reload();
+		}
+	}
+</script>
 
 <SCRIPT>
-// on every click on the body get all values
-// $('body').click(function(){
-// 	console.log('gToolbar - ' + gToolbar)
-// 	console.log('gToolbar - ' + gToolbar)
 
 //--- set menu split ---
 

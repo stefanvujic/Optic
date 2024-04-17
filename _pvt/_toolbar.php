@@ -16,7 +16,8 @@ include_once "_inc_header.php";
 
 $action=myGet('action');
 
-if(!empty($action)||!empty($dir))$parms="?dir=$dir&action=$action&autoload=yes";
+if(!empty($action)||!empty($dir))$parm
+="?dir=$dir&action=$action&autoload=yes";
 
 else $parms="?autoload=yes";
 
@@ -55,7 +56,8 @@ $paneldividerdisplay="block";
 <script src="_pvt_js/util.js"></script>
 
 <style>
-	#save-project, #view-projects {
+	#save-project, #view-project {
+		min-width: 64px;
 		border: 0;
 		outline: 0;
 		cursor: pointer;
@@ -71,23 +73,26 @@ $paneldividerdisplay="block";
 		transition: background-color .24s,box-shadow .24s;
 		height: 22px;
     	font-size: 13px;
-		right: 60%;
     	position: relative;
 		:hover {
 			box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
 		}
         cursor: pointer !important;
 	} 
-	#view-projects {
-		right: 61px;
+	#save-project {
+		right: 10% !important;
+	}
+	#view-project {
+		/* width: 64% !important; */
+		right: 54px !important;
 	}
 	#iPlayBack {
-		position: relative;
+		/* position: relative;
 		top: -2px;
 		width: 18px;
 		cursor: pointer;
 		background: #ffffff;
-		opacity: 0.7;
+		opacity: 0.7; */
 	}
 </style>
 
@@ -1842,29 +1847,22 @@ for($tmp=0;$tmp<4;$tmp++){
 	 
 
 	 wrt("</td>");
-	
-	 wrt("<td style='width:70px;'><button id='save-project'>Save</button></td>");
-	 wrt("<td style='width:70px;'><button id='view-projects'>Projects</button></td>");
-	 
+     ?><td><button id='save-project'>Save</button></td><?php
+	 ?><td style='position: relative; right: 12.5%;'><button id='view-project'>Projects</button></td><?php
+	 ?>
+	<script>
+		document.getElementById('view-project').addEventListener('click', function() {
+			window.location.href = '#';
+		});
+		document.getElementById('view-project').addEventListener('click', function() {
+			window.open('#', '_blank');
+		});
+	</script>												
+	 <?php
 
 	?>
 	
-	<td style='white-space: nowrap; position: relative; left: -45px; font-weight: bold;' style='width:50px;'><p id='user-greeting'></p></td>
-
-	<script>
-
-		$(document).ready(function() {
-            console.log('ready')
-            var user = JSON.parse(sessionStorage.getItem('user_data'));
-            
-			if (user) {
-                console.log(user)
-
-				name = user.name;
-				$('#user-greeting').text('Hello ' + name)
-			}
-		});
-	</script>
+	<td style='white-space: nowrap; position: relative; left: -45px; font-weight: bold;' style='width:50px;'><p style='z-index:2131222' id='user-greeting'></p></td>
 	<?php
 
 
@@ -1874,7 +1872,7 @@ for($tmp=0;$tmp<4;$tmp++){
 
 	 // ========================= PLAY BUTTONS ==========================
 
-	 wrt("<td style='position: relative; right: 15%;' align=center>");
+	 wrt("<td style='position: relative; right: 16%;' align=center>");
 
 	 ?>
 
@@ -1901,8 +1899,10 @@ for($tmp=0;$tmp<4;$tmp++){
 	 
 
 	 ?>
-
+		
 		<!-- toolbar -->
+		
+		<div id='user-name' style='display: inline-block; position: fixed;top: 1%;left: 70%; font-size: 17px;'></div>
 
 		<DIV id=iBoxBdrTop class='corners4' style='overflow:hidden;height:28px;color:black;'>
 
@@ -2107,7 +2107,26 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 			}
 		});
 	});
+	// if logged out hide view-projects button
+	if (!sessionStorage.getItem("is_logged_in")) {
+		document.getElementById('view-project').style.display = 'none';
+	}
+	// if logged in show users name #user-name
+	if (sessionStorage.getItem("is_logged_in")) {
+		document.getElementById('user-name').innerHTML = JSON.parse(sessionStorage.getItem('user_data')).name.bold();
+	}
 	$('#save-project').click(function(){
+		$(this).css('background-color', 'green');
+		$(this).text('save');
+		setTimeout(function(){
+			$('#save-project').text('Saved');
+			$('#save-project').css('background-color', 'rgb(84, 105, 212)');
+		}, 2000);
+		setTimeout(function(){
+			$('#save-project').css('background-color', 'rgb(84, 105, 212)');
+			$('#save-project').text('Save');
+		}, 3000);
+
 		var blend = sessionStorage.getItem('blend');
 
 		var cssFilters = sessionStorage.getItem('cssFilters');
@@ -2119,7 +2138,6 @@ $tmp="background:$btnbgcolor;color:$btncolor;border:solid 1px $btnbordercolor;";
 		var mstart = sessionStorage.getItem('mstart');
 		var mblur = sessionStorage.getItem('mblur');
 
-		// console.log(sessionStorage)
 	})
 
 	

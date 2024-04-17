@@ -4,11 +4,11 @@ require 'db-connect.php';
 
 $request = $_POST['request'];
 
-// $request = 'login';
-// $_POST['username'] = 'stefan';
-// $_POST['password'] = 'password';
-// $_POST['email'] = 'stefan@example.com';
-// $_POST['name'] = 'Stefan Vujic';
+// $request = 'register';
+// $_POST['username'] = 'ste2444sdsd34t3f5an';
+// $_POST['password'] = 'pass4t4sdssdada3tword';
+// $_POST['email'] = 'stefa534tssdds232adda34tn@example.com';
+// $_POST['name'] = 'Stefan sdsdsds';
 
 
 switch ($request) {
@@ -50,7 +50,7 @@ switch ($request) {
         $result = $stmt->get_result();
         $data = $result->fetch_assoc();
 
-        if($data) {
+        if($data['ID']) {
             $data = [];
             $data['user-exists'] = 1;
             echo json_encode($data);
@@ -62,6 +62,7 @@ switch ($request) {
         $stmt = $con->prepare($sql);
         $hashed_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $stmt->bind_param("sssss", $_POST['username'], $_POST['email'], $hashed_password, $_POST['name'], $data['token']);
+
         $is_registered = $stmt->execute();
 
         if($is_registered) {
@@ -70,7 +71,7 @@ switch ($request) {
             $stmt->bind_param("s", $_POST['username']);
             $stmt->execute();
             $result = $stmt->get_result();
-            $data['user-data'] = $result->fetch_assoc();
+            $data = $result->fetch_assoc();
         }else {
             $data = [];
             $data['error'] = 1;

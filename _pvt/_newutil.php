@@ -636,13 +636,13 @@ if($success!=""){
 
 <td class=txthdr>Password: </td>
 
-<td class='append-registration-fields'><input name='reg-pw' type=text value='<?=$pw;?>' style='width:200px;'></td>
+<td class='append-registration-fields'><input name='reg-pw' type=password value='<?=$pw;?>' style='width:200px;'></td>
 
 </tr>
 
 <td class=txthdr>Repeat Password: </td>
 
-<td class='append-registration-fields'><input name='reg-repw' type=text value='<?=$pw;?>' style='width:200px;'></td>
+<td class='append-registration-fields'><input name='reg-repw' type=password value='<?=$pw;?>' style='width:200px;'></td>
 
 </tr>
 

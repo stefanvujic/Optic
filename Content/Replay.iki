@@ -1,1 +1,0 @@
-h.smoothing=1;h.mergeHistory=0;h.relative=0;h.timeout=10;h.curve=50;h.loopmode='retrace';h.delta=25;h.IX=0;h.HISTORY=new Array('saturate','saturate','saturate');h.ITEMS['saturate']=new Array(1,'100,0','184,0','11,0');

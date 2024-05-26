@@ -640,7 +640,7 @@ if($success!=""){
 
 </tr>
 
-<td class=txthdr>Repeat Passwordd: </td>
+<td class=txthdr>Repeat Password: </td>
 
 <td class='append-registration-fields'><input name='reg-repw' type=password value='<?=$pw;?>' style='width:200px;'></td>
 

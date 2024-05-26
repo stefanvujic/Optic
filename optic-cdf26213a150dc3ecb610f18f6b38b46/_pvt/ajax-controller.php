@@ -1,7 +1,7 @@
 <?php
 
 require 'db-connect.php';
-require_once "vendor/autoload.";//ds
+require_once "vendor/autoload.";
 
 $request = $_POST['request'];
 

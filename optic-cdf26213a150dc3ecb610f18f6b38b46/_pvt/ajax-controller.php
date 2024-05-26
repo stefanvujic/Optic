@@ -236,3 +236,5 @@ $wallet_private_key = '0x' . $priv_key_hex;
 
 echo "\r\n   SAVE BUT DO NOT SHARE THIS (Private Key): " . $wallet_private_key;
 echo "\r\n   Address: " . $wallet_address . " \n";
+
+//test

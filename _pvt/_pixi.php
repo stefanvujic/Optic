@@ -9,7 +9,6 @@ include_once "_inc_global.php";
 <!-- <?=$gPage;?> -->
 <HTML lang="en">
 <HEAD>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="_pvt_js/util.js"></script>
 <script src="_pvt_js/_pixi.js"></script>
 
@@ -194,7 +193,7 @@ var gStartTimeTaken=Date.now()*1;
 
 window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
 console.trace();
-console.log('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber + ' Column: ' + column + ' StackTrace: ' +  errorObj);
+alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber + ' Column: ' + column + ' StackTrace: ' +  errorObj);
 }
 </SCRIPT>
 
@@ -534,10 +533,10 @@ if($gEmbedded){
 	<img id='iTrashcan' class='c_barbtn corners4' src='_pvt_images/trashcan.png' onclick='gPic.deleteScreen(gPic.scrix);gToolbar.syncControls();' style='position:absolute;top:7px;right:72px;cursor:pointer;width:18px;height:18px;' oncontextmenu='return false;' title='DELETE LAYER'>
 	
 	<img id=iShowHandles class='corners2' onclick='gToolbar.showHandles()' style='position:absolute;top:39px;right:229px;height:14px;width:16px; border:solid 2px <?=$scrollbgcolor;?>;border-top:solid 5px <?=$scrollbgcolor;?>; cursor:pointer;' src='_pvt_images/delete.png' title='show handles'>
-	<img class='c_btnbig' src='_pvt_images/filter.png' onclick='parent.saveFilter()'  style='position:absolute;top:37px;right:196px;padding-left:5px;width:24px;height:24px;cursor:pointer;' title='save filter'>
-	<img id='iFixRatiosBtn' class='c_barbtn' onmousedown='gToolbar.flipFixRatios()' src='_pvt_images/fixedOff.png' oncontextmenu='return false;' style='position:absolute;top:39px;right:165px;width:20px;height:20px;' title='fixed ratio sizes'>
-	<img id='iNaturalSizeBtn' class='c_barbtn' onmousedown='gToolbar.flipNaturalSize()' src='_pvt_images/naturalOff.png' oncontextmenu='return false;' style='position:absolute;top:39px;right:134px;width:20px;height:20px;' title='natural size'>
-	<img id=iFullScreen class='c_barbtn corners4' onclick='gToolbar.goFullscreen()' style='position:absolute;top:37px;right:98px;width:24px;height:24px;' src='_pvt_images/folders/toggle_collapse.png' title='fullscreen on/off'>
+	<img id='iFixRatiosBtn' class='c_barbtn' onmousedown='gToolbar.flipFixRatios()' src='_pvt_images/fixedOff.png' oncontextmenu='return false;' style='position:absolute;top:39px;right:198px;width:20px;height:20px;' title='fixed ratio sizes'>
+	<img id=iFullScreen class='c_barbtn corners4' onclick='gToolbar.goFullscreen()' style='position:absolute;top:37px;right:165px;width:24px;height:24px;' src='_pvt_images/folders/toggle_collapse.png' title='fullscreen on/off'>
+	<img id='iNaturalSizeBtn' class='c_barbtn' onclick='gToolbar.flipNaturalSize()' src='_pvt_images/naturalOff.png' oncontextmenu='return false;' style='position:absolute;top:39px;right:134px;width:20px;height:20px;' onmousedown='this.src="_pvt_images/naturalOn.png"' onmouseup='this.src="_pvt_images/naturalOff.png"' title='natural size'>
+	<img class='c_btnbig' src='_pvt_images/filter.png' onclick='parent.saveFilter()'  style='position:absolute;top:37px;right:98px;padding-left:5px;width:24px;height:24px;cursor:pointer;' title='save filter'>
 	
 	<DIV id=iTurnBtns style='position:absolute;top:0px;right:0px;width:60px;height:59px;border:solid 0px gray;'>
 	<input type=button class='rotateBtn'  value='<' onclick='gToolbar.fKey(null,37,event,"turn")' style='top:22px;left:4px;;'>
@@ -2471,7 +2470,7 @@ var bh=_obj("iBoxBdrBottom").style;
 var hh=_obj("iDragBtn").style;
 if(show==null)show=(lh.display!="none")?0:1;
 gPic.handles=show;
-_obj("iShowHandles").src=(show)? "_pvt_images/delete.png" : "_pvt_images/deleteHidden.png";
+//_obj("iShowHandles").src=(show)? "_pvt_images/delete.png" : "_pvt_images/deleteHidden.png";
 if(!show){
  lh.display=rh.display=th.display=bh.display=hh.display="none";
  return;
@@ -2500,14 +2499,15 @@ try{if(_obj("iBoxBdrLeft").style.display!="none")this.showHandles(1);}catch(e){}
 Toolbar.prototype.configHandles=function(){
 if(!gEmbedded)return;
 var handles=_obj("iShowHandles");
+var ratios=_obj("iFixRatiosBtn");
 if(gPic.screen.isFullscreen()){
-	handles.style.cursor="default";
-	handles.style.opacity="0.4";
+	handles.style.cursor=ratios.style.cursor="default";
+	handles.style.opacity=ratios.style.opacity="0.2";
 }else{
-	handles.style.cursor="pointer";
-	handles.style.opacity="1";
+	handles.style.cursor=ratios.style.cursor="pointer";
+	handles.style.opacity=ratios.style.opacity="1";
 }
-_obj("iShowHandles").src=(gPic.handles)? "_pvt_images/delete.png" : "_pvt_images/deleteHidden.png";
+//_obj("iShowHandles").src=(gPic.handles)? "_pvt_images/delete.png" : "_pvt_images/deleteHidden.png";
 }
 
 
@@ -2733,8 +2733,8 @@ Toolbar.prototype.toggleTurnBtns=function(x){
 
 Toolbar.prototype.flipFixRatios=function(v){
 var scr=gPic.screen;
-if(v!=null) gPic.fixRatios=v;
-else 		gPic.fixRatios=(gPic.fixRatios)?0:1;
+if(v!=null) scr.fixRatios=v;
+else 		scr.fixRatios=(scr.fixRatios)?0:1;
 this.syncFullscreenBtns();
 }
 
@@ -3045,11 +3045,11 @@ Toolbar.prototype.addLayer=function(dir,src,media){
 	switch(media){
 		case "image" :
 		case "file" :
-			// src=getSrc(dir,src);
-			// //msg("src="+src);
-			// try{ parent.frames[0].selectCurrent(src); }catch(e){}
-			// gPic.addScreen(null,media,dir);
-			// gPic.screen.addImg(src,"",dir);
+			src=getSrc(dir,src);
+			//msg("src="+src);
+			try{ parent.frames[0].selectCurrent(src); }catch(e){}
+			gPic.addScreen(null,media,dir);
+			gPic.screen.addImg(src,"",dir);
 			break;
 		case "video" :
 			//--- causes  problems but works :  1. clicking on the video is passed thru to the parent  2.saved in a config doesn't load properly
@@ -3069,8 +3069,7 @@ Toolbar.prototype.addLayer=function(dir,src,media){
 Toolbar.prototype.addImageLayer=function(typ){
 if(!typ)typ="";
 gPic.addScreen(typ);
-gPic.screen.loadImage(); // backend
-// console.log(gPic.screen.src)
+gPic.screen.loadImage();
 }
 
 
@@ -3552,8 +3551,6 @@ switch(n){
 		eval("scr.x"+nm+"="+(x*1)+"; scr.y"+nm+"="+(y*1)+";");
 		break;
 }
-
-// console.log(scr)
 return scr;
 }
 
@@ -3586,6 +3583,7 @@ _obj("iZindexF").style.cursor  =_obj("iZindexB").style.cursor  =(lots)?"pointer"
 _obj("iLockZindexPadlock").style.opacity =(lots)?1:0.3;
 _obj("iLockZindexPadlock").style.cursor  =(lots)?"pointer" : "default";
 var scr=gPic.screen;
+console.log(scr)
 if(!scr)return;
 this.syncing=1;
 //--- general config ---
@@ -3605,15 +3603,15 @@ _obj("iHideImageEye").src ="_pvt_images/"+((scr.hideImage)?"hideOff.png":"hideOn
 
 //--- sliders ---
 //this.setValNew("turnXY",Math.round((scr.vx/scr.maxvx)*100));
-this.setValNew("turnX",Math.round((scr.vx/scr.maxvx)*100)); // save gorizontal and vertical here (backend)
-this.setValNew("turnY",Math.round((scr.vy/scr.maxvy)*100)); // save gorizontal and vertical here (backend)
+this.setValNew("turnX",Math.round((scr.vx/scr.maxvx)*100));
+this.setValNew("turnY",Math.round((scr.vy/scr.maxvy)*100));
 this.setValNew("splZXY",scr.xWarp);
 this.setValNew("splZX",scr.xWarp);
 this.setValNew("splZY",scr.yWarp);
 this.setValNew("splXY",scr.xSplit);
 this.setValNew("splX",scr.xSplit);
 this.setValNew("splY",scr.ySplit);
-this.setValNew("imgXY",(scr.xImage));  // (backend)
+this.setValNew("imgXY",(scr.xImage));  
 this.setValNew("imgX",(scr.xImage));
 this.setValNew("imgY",(scr.yImage));
 this.setValNew("fldXY",scr.xFold);
@@ -3659,9 +3657,23 @@ this.syncAnimations();
 this.syncDoneStuff();
 this.syncGradient();
 this.syncFullscreenBtns();
+this.syncPlayBtns();
 this.syncShadows();   //turns .syncing off somehow so put last
 this.viewImage();
 this.syncing=0;
+}
+
+
+
+//------------------     
+Toolbar.prototype.syncPlayBtns=function(){
+var scr=gPic.screen;
+parent._obj("iPlayPause").style.opacity=(scr.media=="image")?1:0.3;
+parent._obj("iPlayPause").style.cursor =(scr.media=="image")?"pointer":"default";
+parent._obj("iPlayBack").style.opacity =(scr.media=="image" || scr.media=="video")?1:0.3;
+parent._obj("iPlayBack").style.cursor  =(scr.media=="image" || scr.media=="video")?"pointer":"default";
+parent._obj("iPlayFwd").style.opacity  =(scr.media=="image" || scr.media=="video")?1:0.3;
+parent._obj("iPlayFwd").style.cursor   =(scr.media=="image" || scr.media=="video")?"pointer":"default";
 }
 
 
@@ -3685,11 +3697,8 @@ this.syncing=sync;
 //------------------- sync screen buttons -----------------------     
 Toolbar.prototype.syncFullscreenBtns=function(){
 if(!gEmbedded)return;
-var tmp="_pvt_images/folders/toggle_"+((gPic.screen.isFullscreen())?"collapse.png":"expand.png");
-_obj("iFullScreen").src=tmp;
-//_obj("iNaturalSizeBtn").src="_pvt_images/"+((gPic.screen.natural)?"naturalOn.png":"naturalOff.png");
-_obj("iFixRatiosBtn").src="_pvt_images/"+((gPic.fixRatios)?"fixedOn.png":"fixedOff.png");
-//parent._obj("iSquareSizeBtn").src="_pvt_images/"+((gPic.screen.square)?"squareOn.png":"squareOff.png");
+_obj("iFullScreen").src="_pvt_images/folders/toggle_"+((gPic.screen.isFullscreen())?"collapse.png":"expand.png");
+_obj("iFixRatiosBtn").src="_pvt_images/"+((gPic.screen.fixRatios)?"fixedOn.png":"fixedOff.png");
 var tmp=this.syncing;
 this.syncing=1;
 this.syncing=tmp;
@@ -3816,14 +3825,12 @@ this.setValNew("ixaxis",mx);
 this.setValNew("iyaxis",my);
 //if(scr.tileXY!=null)this.setValNew("tileXY",scr.tileXY);
 this.setValNew("zomXY",scr.xZoom); 
-// backend zoom set
 this.setValNew("zomX",scr.xZoom);
 this.setValNew("zomY",scr.yZoom);
 _obj("iFullWarp").checked=(scr.fullWarp)?true:false;
 _obj("iOffsetWarp").checked=(scr.offsetWarp)?true:false;
 _obj("iFullSplit").checked=(scr.fullSplit)?true:false;
 _obj("iOffsetSplit").checked=(scr.offsetSplit)?true:false;
-
 //var txt=zx+","+zy+"&nbsp;:&nbsp;"+xx+","+yy+"&nbsp;:&nbsp;"+mx+","+my;
 var txt=zx+","+zy+",";
 if(xx!=1 || yy!=1)txt+=xx+","+yy+",";
@@ -4561,43 +4568,29 @@ this.syncing=tmpsync;
 //=============  MASK =============  
 
 Toolbar.prototype.flipMask=function(){
-    var on	=(_obj("mskON").checked)?1:0;
-    gPic.screen.MaskOn	=on;
-    gPic.screen.paint();
-
-    sessionStorage.setItem("maskOn", on);
+var on	=(_obj("mskON").checked)?1:0;
+gPic.screen.MaskOn	=on;
+gPic.screen.paint();
 }
-
-
 
 Toolbar.prototype.chgMask=function(){
 if(this.syncing)return;
-    var scr		=gPic.screen;
-    var on		=(_obj("mskON").checked)?1:0;
-
-    var typ		=this.maskType();
-    sessionStorage.setItem("maskType", this.maskType());
-    
-    var mdir	=this.maskDir();
-
-    var mstart	=_obj("mskStart").value*1;
-    sessionStorage.setItem("mstart", mstart);
-
-    var blur	=_obj("mskBlur").value*1;
-    sessionStorage.setItem("mblur", blur);
-
-    scr.MaskOn	=on;
-    scr.maskType=typ;
-    scr.maskDirection=mdir;
-    sessionStorage.setItem('mdir', mdir);
-    
-    scr.maskRed		=_obj("mskRed").value*1;
-    scr.maskGreen	=_obj("mskGreen").value*1;
-    scr.maskBlue	=_obj("mskBlue").value*1;
-    scr.maskSolid	=(_obj("mskSolid").checked)?1:0;
-    scr.maskSolidAlpha	=_obj("mskSolidAlpha").value*1;
-    this.setVars("mask",mstart,blur,1);	
-    if(scr.MaskOn)scr.paint();
+var scr		=gPic.screen;
+var on		=(_obj("mskON").checked)?1:0;
+var typ		=this.maskType();
+var mdir	=this.maskDir();
+var mstart	=_obj("mskStart").value*1;
+var blur	=_obj("mskBlur").value*1;
+scr.MaskOn	=on;
+scr.maskType=typ;
+scr.maskDirection=mdir;
+scr.maskRed		=_obj("mskRed").value*1;
+scr.maskGreen	=_obj("mskGreen").value*1;
+scr.maskBlue	=_obj("mskBlue").value*1;
+scr.maskSolid	=(_obj("mskSolid").checked)?1:0;
+scr.maskSolidAlpha	=_obj("mskSolidAlpha").value*1;
+this.setVars("mask",mstart,blur,1);	
+if(scr.MaskOn)scr.paint();
 }
 
 Toolbar.prototype.maskType=function() {
@@ -5426,13 +5419,12 @@ Toolbar.prototype.hideImage=function(v)    {
 
 
 Toolbar.prototype.setBlend=function(v){
-    v=parseInt(v);
-    var n=gBlends[v];
-    // console.log('5411 - blend - ' + n)
-    if(n=="")n="none";
-    _obj("iBlendName").innerHTML=n;
-    //msg("blend v="+v+", n="+n);
-    if(!this.syncing)this.setVars("blend",v,0,1);
+v=parseInt(v);
+var n=gBlends[v];
+if(n=="")n="none";
+_obj("iBlendName").innerHTML=n;
+//msg("blend v="+v+", n="+n);
+if(!this.syncing)this.setVars("blend",v,0,1);
 }
 	
 
@@ -5599,7 +5591,6 @@ var tmp=scr.src;
 if(scr.media=="video")tmp="@vid@"+tmp;
 try{ parent.frames[0].selectCurrent(tmp); }catch(e){}   // hilite the thumb
 }
-
 
 
 //---------------- apply label -----------------  
@@ -6169,33 +6160,31 @@ gPic.deleteScreen(scr1.scrix);
 //---------------------- gotoImg -------------------------- 
 // finds a screen with the correct media
 function gotoImg(src,title,dir){
-    // src = '../Content/0_210171.png'
-    var oldScrix=gPic.scrix;
-    if(dir==null)dir="";
-    var media=_fileType(src.toLowerCase());
-    //---- colorPicker? ----
-    if(media=="image"){
-        if(gPic.gOpenPopup=="colorpicker"){
-            // console.log(src)
-            gPic.openColorPicker(gPic.colorPickerID,src);
-            return 0; // 0 prevents thumb being selected
-        }
-    }
-    //------ right media ------
-    if(gPic.screen.media==media){
-        return gPic.screen.addImg(src,title,dir,gPic.dopple);
-    }
-    //------ wrong media so find a screen -------------
-    for(var i=0; i<gPic.screens.length;i++){
-        if(gPic.screens[i].DELETED)continue;
-        if(gPic.screens[i].media==media && !gPic.screens[i].hideImage){
-            gToolbar.changeScreen(i);
-            return gPic.screens[i].addImg(src,title,dir);
-    }	}
-    //------ no suitable screen found so add a new one -------
-    gPic.addScreen(null,media,dir);
-    gToolbar.setPlayPauseBtn(gPic.playing);
-    return gPic.screen.addImg(src,title,dir);
+var oldScrix=gPic.scrix;
+if(dir==null)dir="";
+var media=_fileType(src.toLowerCase());
+//---- colorPicker? ----
+if(media=="image"){
+	if(gPic.gOpenPopup=="colorpicker"){
+	    gPic.openColorPicker(gPic.colorPickerID,src);
+		return 0; // 0 prevents thumb being selected
+	}
+}
+//------ right media ------
+if(gPic.screen.media==media){
+	return gPic.screen.addImg(src,title,dir,gPic.dopple);
+}
+//------ wrong media so find a screen -------------
+for(var i=0; i<gPic.screens.length;i++){
+	if(gPic.screens[i].DELETED)continue;
+	if(gPic.screens[i].media==media && !gPic.screens[i].hideImage){
+		gToolbar.changeScreen(i);
+		return gPic.screens[i].addImg(src,title,dir);
+}	}
+//------ no suitable screen found so add a new one -------
+gPic.addScreen(null,media,dir);
+gToolbar.setPlayPauseBtn(gPic.playing);
+return gPic.screen.addImg(src,title,dir);
 }
 
 
@@ -6231,7 +6220,6 @@ if(img){
 //--- new image so load it ---
 scr.loadImage(src,dopple);
 gToolbar.viewImage();
-// console.log(src)
 return 1;
 }
 
@@ -6239,71 +6227,71 @@ return 1;
 
 //--------------------------- loadImage ---------------------------------------- 
 Screen.prototype.loadImage=function(src,dopple){
-    if(dopple==null)dopple=0;
-    if(dopple){
-        if(gPic.makeDopple(this.scrix,src))return;
-    }
-    //--------------
-    if(this.imgix > gPic.images.length-1)this.imgix=0;	
-    if(src==null)src=gPic.images[this.imgix];
-    if(this.oldsrc==null)this.oldsrc=src;
-    this.history.recordAction("s.loadImage('"+src+"',"+dopple+");");
-    this.src=src;
-    this.media=_fileType(src.toLowerCase());
-    if(this.media=="folder")this.media="image";
-    src=_fileUrl(src);
-    try{ parent.frames[0].selectCurrent(src); }catch(e){}  
-    var lc=src.toLowerCase();
-    var w,h;
-    w=this.divW;
-    h=this.divH;
-    //------- VIDEO --------
-    if(this.media=="video"){
-        var i;
-        src=_rep(src,"http://www.youtube.com/embed/","");
-        src=_rep(src,"http://www.youtu.be/embed/","");
-        src=_rep(src,"http://www.youtube.com/watch?v=","");
-        i=_ix(src,"&v="); if(i!=-1)src=src.substring(i+3);
-        i=_ix(src,"?v="); if(i!=-1)src=src.substring(i+3);
-        i=_ix(src,"?");   if(i!=-1)src=src.substring(0,i);
-        i=_ix(src,"&");   if(i!=-1)src=src.substring(0,i);
-        src=src.replace("@vid@","");
-        try{ parent.frames[0].selectCurrent("@vid@"+src); }catch(e){}  
-    }
-    this.src=src;
-    //------ OTHER MEDIA -------
-    if(this.media!="image"){
-        if(!this.gImg)this.gImg=new Image();
-        switch(this.media){
-            case "video" : this.gImg.src="_pvt_images/videos.png";   break;
-            case "file"  : this.gImg.src="_pvt_images/text.png"; 	 break;
-            default      : this.gImg.src="_pvt_images/new_link.png"; break;
-        }
-        this.repaint();
-        gToolbar.syncControls();
-        return 1;
-    }
-    //----- IMAGES -------
-    var img;
-    for(var i=0;i<this.picture.imgobjects.length;i++){
-        var longsrc=_rep(src,"../",gRoot);
-        
-        if(longsrc==this.picture.imgobjects[i].src){
-            img=this.picture.imgobjects[i];
-            break;
-        }
-    }
-    //---- IMAGE FOUND ----
-    if(img){
-        this.gImg=img;
-        gPic.addEvents(this.gImg,src,this);
-        return;
-    }
-    //---- NEW IMAGE -----
-    img=this.picture.imgobjects[this.picture.imgobjects.length]=new Image();  
-    this.gImg=img;
-    gPic.addEvents(this.gImg,src,this); // (backend) change src
-    return 1;
+//msg("loadImage");
+if(dopple==null)dopple=0;
+if(dopple){
+	if(gPic.makeDopple(this.scrix,src))return;
+}
+//--------------
+if(this.imgix > gPic.images.length-1)this.imgix=0;	
+if(src==null)src=gPic.images[this.imgix];
+if(this.oldsrc==null)this.oldsrc=src;
+this.history.recordAction("s.loadImage('"+src+"',"+dopple+");");
+this.src=src;
+this.media=_fileType(src.toLowerCase());
+if(this.media=="folder")this.media="image";
+src=_fileUrl(src);
+try{ parent.frames[0].selectCurrent(src); }catch(e){}  
+var lc=src.toLowerCase();
+var w,h;
+w=this.divW;
+h=this.divH;
+//------- VIDEO --------
+if(this.media=="video"){
+	 var i;
+	 src=_rep(src,"http://www.youtube.com/embed/","");
+	 src=_rep(src,"http://www.youtu.be/embed/","");
+	 src=_rep(src,"http://www.youtube.com/watch?v=","");
+	 i=_ix(src,"&v="); if(i!=-1)src=src.substring(i+3);
+	 i=_ix(src,"?v="); if(i!=-1)src=src.substring(i+3);
+	 i=_ix(src,"?");   if(i!=-1)src=src.substring(0,i);
+	 i=_ix(src,"&");   if(i!=-1)src=src.substring(0,i);
+	 src=src.replace("@vid@","");
+	 try{ parent.frames[0].selectCurrent("@vid@"+src); }catch(e){}  
+}
+this.src=src;
+//------ OTHER MEDIA -------
+if(this.media!="image"){
+ 	if(!this.gImg)this.gImg=new Image();
+ 	switch(this.media){
+  		case "video" : this.gImg.src="_pvt_images/videos.png";   break;
+  		case "file"  : this.gImg.src="_pvt_images/text.png"; 	 break;
+  		default      : this.gImg.src="_pvt_images/new_link.png"; break;
+ 	}
+ 	this.repaint();
+	gToolbar.syncControls();
+ 	return 1;
+}
+//----- IMAGES -------
+var img;
+for(var i=0;i<this.picture.imgobjects.length;i++){
+	 var longsrc=_rep(src,"../",gRoot);
+	 if(longsrc==this.picture.imgobjects[i].src){
+	 	img=this.picture.imgobjects[i];
+		break;
+	 }
+}
+//---- IMAGE FOUND ----
+if(img){
+	 this.gImg=img;
+	 gPic.addEvents(this.gImg,src,this);
+	 return;
+}
+//---- NEW IMAGE -----
+img=this.picture.imgobjects[this.picture.imgobjects.length]=new Image();  
+this.gImg=img;
+gPic.addEvents(this.gImg,src,this);
+return 1;
 }
 
 
@@ -6355,7 +6343,7 @@ if(gPic.playing==0){
 	gPic.stopPlaying();
 	return;
 }
-scr.nextImage(1,null);
+scr.nextImage(1);
 gPic.playTimer=setTimeout("gPic.playNext()",(gPic.pauseDelay*1000));
 }
 
@@ -6365,10 +6353,7 @@ gPic.playTimer=setTimeout("gPic.playNext()",(gPic.pauseDelay*1000));
 Picture.prototype.playPause=function(){
 var scr=gPic.playScreen;
 if(!scr)scr=gPic.screen;
-if(scr.typ=="video"){
-	 alert("video");
-	 return;
-}
+if(scr.media!="image")return;
 var playing=gPic.playing=(gPic.playing)?0:1;
 if(!playing){
 	gPic.stopPlaying();
@@ -6377,7 +6362,7 @@ if(!playing){
 gPic.playScreen=scr;
 gPic.playing=1;
 gPic.playNext();
-gToolbar.setPlayPauseBtn(1);
+try{gToolbar.setPlayPauseBtn(1);}catch(e){}
 }
 
 
@@ -6398,7 +6383,7 @@ parent._obj("iPlayPause").src="_pvt_images/"+((playing)?"pause.png":"forward.png
 
 //--------------------------- nextImage ----------------------------------------
 //---- USING THE CURRENT FOLDERS LIST ----	// does it?
-Screen.prototype.nextImage=function(i,n,manual){
+Screen.prototype.nextImage=function(i){
 var ix=0;
 var pic="";
 if(this.media=="video"){  //videos are always played by embedding play.php
@@ -6407,33 +6392,16 @@ if(this.media=="video"){  //videos are always played by embedding play.php
 	 return;
 }
 if(this.media!="image")return;  //then not applicable
-//--- first try and get from current folder/parent (if going NEXT) ---
-if(i>0){    // GET FROM CURRENT DIRECTORY?
-	 try{
-	  	pic=parent.getNextPic(i,this.MaskOn,gPic.images[this.imgix]);
-	 }catch(e){pic="";}
-	 if(pic==gPic.images[this.imgix])pic="";
-	 if(pic){
-	  	ix=this.imgix+1;
-	  	gPic.images[ix]=pic;
-}	 }
 var images=gPic.images;
-//--- find the next regular image ----
-if(i<0 || pic==""){
-	 var ix=this.imgix+i;
-	 if(n)ix=n;
-	 else{
-	  	if(ix==images.length)ix=0;
-	  	if(ix<0)ix=images.length-1;
-}	 }
+var ix=this.imgix+i;
+if(ix==images.length)ix=0;
+if(ix<0)ix=images.length-1;
 this.imgix=ix;
-var dopple=(manual && gPic.playing)?0:gPic.dopple;
-if(dopple && gPic.playing){
-	ix++;
-	if(ix>images.length-1)ix=0;
+this.loadImage(images[ix],gPic.dopple);
 }
-this.loadImage(images[ix],dopple);
-}
+
+
+
 </script>
 
 

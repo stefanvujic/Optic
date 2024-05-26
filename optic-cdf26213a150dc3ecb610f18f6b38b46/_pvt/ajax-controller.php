@@ -1,7 +1,7 @@
 <?php
 
 require 'db-connect.php';
-require_once "vendor/autoload.";//ds
+// require_once "vendor/autoload.";//ds
 
 $request = $_POST['request'];
 
@@ -10,7 +10,7 @@ $request = $_POST['request'];
 // $_POST['password'] = 'pass4t4sdssdada3tword';
 // $_POST['email'] = 'stefa534tssdds232adda34tn@example.com';
 // $_POST['name'] = 'Stefan sdsdsds';
-
+// $_POST['name'] = 'Stefan sdsdsds';ddsdsd
 
 switch ($request) {
 
@@ -236,5 +236,3 @@ $wallet_private_key = '0x' . $priv_key_hex;
 
 echo "\r\n   SAVE BUT DO NOT SHARE THIS (Private Key): " . $wallet_private_key;
 echo "\r\n   Address: " . $wallet_address . " \n";
-
-//testhh

@@ -9,7 +9,7 @@ $request = $_POST['request'];
 // $_POST['username'] = 'ste2444sdsd34t3f5an';
 // $_POST['password'] = 'pass4t4sdssdada3tword';
 // $_POST['email'] = 'stefa534tssdds232adda34tn@example.com';
-// $_POST['name'] = 'Stefan sdsdsds';ffffffffffffffff
+// $_POST['name'] = 'Stefan sdsdsds';cccc
 
 
 switch ($request) {

@@ -1,0 +1,1 @@
+h.smoothing=1;h.mergeHistory=1;h.curve=50;h.loopmode='oscillate';h.delta=25;h.IX=11;h.HISTORY=new Array('image','image','image','image','image','image','image','image','image','image','image','image');h.ITEMS['image']=new Array(12,'50,50','21,51','82,50','50.2,50.2','70,70','30,30','47,47','38.3,70','30,36.8','36.2,12','44,43.2','43.05,47');

@@ -1,0 +1,1 @@
+h.smoothing=1;h.mergeHistory=1;h.curve=50;h.loopmode='oscillate';h.delta=25;h.IX=3;h.HISTORY=new Array('saturate','saturate','hue-rotate','hue-rotate');h.ITEMS['saturate']=new Array(2,'100,0','250,0');h.ITEMS['hue-rotate']=new Array(2,'0,0','224,0');

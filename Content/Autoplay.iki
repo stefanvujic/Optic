@@ -1,0 +1,1 @@
+ a.xrangemax=60; a.xrangemin=40; a.yrangemax=60; a.yrangemin=40; a.aniXon=1; a.aniYon=1; a.delta=0.2; a.timeout=0; a.loopmode='oscillate';

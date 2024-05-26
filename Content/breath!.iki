@@ -1,0 +1,1 @@
+h.smoothing=1;h.mergeHistory=1;h.curve=50;h.loopmode='oscillate';h.delta=25;h.IX=5;h.HISTORY=new Array('s.loadImage','s.loadImage','image','image','image','image');h.ITEMS['s.loadImage']=new Array(2,'http://optic.com/Content/2016-10-13%2016.51.00.jpg',0,'../Content/0_2101715.png',0);h.ITEMS['image']=new Array(4,'50,50','40,26','39,32','53,54');

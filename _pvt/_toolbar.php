@@ -1024,6 +1024,16 @@ if(gShowmenu){
 </SCRIPT>
 
 
+<SCRIPT>
+if(gLoggedIn){
+	_obj("iLogoutLink").style.display="block";
+	_obj("iLoginLink").style.display="none";
+}else{
+	_obj("iLoginLink").style.display="block";
+	_obj("iLogoutLink").style.display="none";
+}
+</SCRIPT>
+
 
 
 

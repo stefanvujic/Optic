@@ -701,6 +701,13 @@ if($success!=""){
     });
   });
 
+  if user logged in show upload buttons next to views section
+  if(sessionStorage.getItem("is_logged_in")){
+    $(".upload-buttons").show();
+  }
+
+  console.log(sessionStorage.getItem("is_logged_in"))
+
   // console.log(sessionStorage.getItem("user-data"))
 
   $(".register").click(function(){

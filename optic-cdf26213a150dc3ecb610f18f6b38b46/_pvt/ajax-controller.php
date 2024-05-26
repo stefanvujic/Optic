@@ -5,11 +5,11 @@ require_once "vendor/autoload.";
 
 $request = $_POST['request'];
 
-// $request = 'register';fffff
+// $request = 'register';
 // $_POST['username'] = 'ste2444sdsd34t3f5an';
 // $_POST['password'] = 'pass4t4sdssdada3tword';
 // $_POST['email'] = 'stefa534tssdds232adda34tn@example.com';
-// $_POST['name'] = 'Stefan sdsdsds';
+// $_POST['name'] = 'Stefan sdsdsds';ghh
 
 
 switch ($request) {

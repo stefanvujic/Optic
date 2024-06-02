@@ -1,0 +1,1 @@
+h.smoothing=1;h.mergeHistory=1;h.curve=50;h.loopmode='oscillate';h.delta=25;h.IX=5;h.HISTORY=new Array('panelskew','panelskew','panelskew','panelskew','panelskew','panelskew');h.ITEMS['panelskew']=new Array(6,'0,0','2,3.4','-1.96,10','-10,-3.4','-6.04,-10','-0.04,0');

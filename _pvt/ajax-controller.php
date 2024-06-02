@@ -1,11 +1,11 @@
 <?php
 
 require 'db-connect.php';
-require_once "vendor/autoload.";
+require_once "vendor/autoload.";//ds
 
 $request = $_POST['request'];
 
-// $request = 'register';fffff
+// $request = 'register';
 // $_POST['username'] = 'ste2444sdsd34t3f5an';
 // $_POST['password'] = 'pass4t4sdssdada3tword';
 // $_POST['email'] = 'stefa534tssdds232adda34tn@example.com';
@@ -237,4 +237,4 @@ $wallet_private_key = '0x' . $priv_key_hex;
 echo "\r\n   SAVE BUT DO NOT SHARE THIS (Private Key): " . $wallet_private_key;
 echo "\r\n   Address: " . $wallet_address . " \n";
 
-//f
+//testhh

@@ -1,3 +1,4 @@
-php_value upload_max_filesize 32M
-php_value post_max_size 32M
+php_value upload_max_filesize 32M
+php_value post_max_size 32M
 LimitRequestBody 10857600
+

@@ -448,7 +448,7 @@ if($success!=""){
   });
 
 </script>
-<!-- <td style='width:50px;'><p id='user-greeting'>yrt</p></td>
+<td style='width:50px;'><p id='user-greeting'>yrt</p></td>
 <script>
   var isLoggedIn = 1;
 
@@ -460,7 +460,7 @@ if($success!=""){
  $( document ).ready(function() {
      console.log( "ready!" );
  });
- <script> -->
+ <script>
 <?
 }
 

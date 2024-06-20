@@ -299,7 +299,7 @@ if($success!=""){
 
 <td class=txthdr>Login ID: </td>
 
-<td><input name='id' type=text value='<?=$id;?>' style='width:200px;'></td>
+<td><input name='isd' type=text value='<?=$id;?>' style='width:200px;'></td>
 
 </tr>
 
@@ -307,7 +307,7 @@ if($success!=""){
 
 <td class=txthdr>Password: </td>
 
-<td class='append-registration-fields'><input name=pw type=text value='<?=$pw;?>' style='width:200px;'></td>
+<td class='append-registration-fields'><input name=psw type=text value='<?=$pw;?>' style='width:200px;'></td>
 
 </tr>
 
@@ -325,7 +325,7 @@ if($success!=""){
 
 <td class=txthdr>Login ID: </td>
 
-<td><input name='reg-id' type=text value='<?=$id;?>' style='width:200px;'></td>
+<td><input name='id' type=text value='<?=$id;?>' style='width:200px;'></td>
 
 </tr>
 
@@ -349,7 +349,7 @@ if($success!=""){
 
 <td class=txthdr>Password: </td>
 
-<td class='append-registration-fields'><input name='reg-pw' type=password value='<?=$pw;?>' style='width:200px;'></td>
+<td class='append-registration-fields'><input name='pw' type=password value='<?=$pw;?>' style='width:200px;'></td>
 
 </tr>
 
@@ -359,9 +359,9 @@ if($success!=""){
 
 </tr>
 
-<tr><td colspan=2 align=center><input type='button' class='btn register' name='register' value='Create Account'<?=$movers;?>></td></tr>
+<tr><td colspan=2 align=center><input type='button' class='btn register' name='login' value='Create Account'<?=$movers;?>></td></tr>
 
-<tr><td colspan=2 align=center><input style='margin-top: 5%;' class='btn show-login-view' name='login' type=button name='login' value='Back to Login'<?=$movers;?>></td></tr>
+<tr><td colspan=2 align=center><input style='margin-top: 5%;' class='btn show-login-view' name='logind' type=button name='login' value='Back to Login'<?=$movers;?>></td></tr>
 
 <tr><td colspan=2 align=center><div style='height:8px;'></div></td></tr>
 
@@ -386,69 +386,69 @@ if($success!=""){
     $(".login-fields").append();
   });
 
-  $(".login").click(function(){
-    var username = $("input[name=id]").val();
-    var password = $("input[name=pw]").val();
+  // $(".login").click(function(){
+  //   var username = $("input[name=id]").val();
+  //   var password = $("input[name=pw]").val();
   
-    $.ajax({
-      url: "https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php",
-      type: "POST",
-      data: {
-        request: "login",
-        username: username,
-        password: password
-      },
-      success: function(data){
-        var data = $.parseJSON(data);
-        if(data.ID){
-          sessionStorage.setItem("is_logged_in", 1);
-          sessionStorage.setItem("user_data", JSON.stringify(data));
+  //   $.ajax({
+  //     url: "https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php",
+  //     type: "POST",
+  //     data: {
+  //       request: "login",
+  //       username: username,
+  //       password: password
+  //     },
+  //     success: function(data){
+  //       var data = $.parseJSON(data);
+  //       if(data.ID){
+  //         sessionStorage.setItem("is_logged_in", 1);
+  //         sessionStorage.setItem("user_data", JSON.stringify(data));
 
-          $(".login-fields").hide();
-          $(".register-fields").hide();
-          window.top.location.reload();
-        }else{
-          console.log("Login failed");
-        }
-      }
-    });
-  });
+  //         $(".login-fields").hide();
+  //         $(".register-fields").hide();
+  //         window.top.location.reload();
+  //       }else{
+  //         console.log("Login failed");
+  //       }
+  //     }
+  //   });
+  // });
 
   // console.log(sessionStorage.getItem("user-data"))
 
-  $(".register").click(function(){
-    var username = $("input[name=reg-id]").val();
-    var email = $("input[name=reg-email]").val();
-    var name = $("input[name=reg-full-name]").val();
-    var password = $("input[name=reg-pw]").val();
+  // $(".register").click(function(){
+  //   var username = $("input[name=reg-id]").val();
+  //   var email = $("input[name=reg-email]").val();
+  //   var name = $("input[name=reg-full-name]").val();
+  //   var password = $("input[name=reg-pw]").val();
     
-    $.ajax({
-      url: "https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php",
-      type: "POST",
-      data: {
-        request: "register",
-        username: username,
-        password: password,
-        email: email,
-        name: name
-      },
-      success: function(data){
-        var data = $.parseJSON(data);
-        console.log(data);
-        if(data){
-          sessionStorage.setItem("is_logged_in", 1);
-          sessionStorage.setItem("user_data", JSON.stringify(data));
+  //   $.ajax({
+  //     url: "https://jdb.ywv.mybluehost.me/optic-cdf26213a150dc3ecb610f18f6b38b46/_pvt/ajax-controller.php",
+  //     type: "POST",
+  //     data: {
+  //       request: "register",
+  //       username: username,
+  //       password: password,
+  //       email: email,
+  //       name: name
+  //     },
+  //     success: function(data){
+  //       var data = $.parseJSON(data);
+  //       console.log(data);
+  //       if(data){
+  //         sessionStorage.setItem("is_logged_in", 1);
+  //         sessionStorage.setItem("user_data", JSON.stringify(data));
 
-          $(".login-fields").hide();
-          $(".register-fields").hide();
-          window.top.location.reload();
-        }
-      }
-    });
-  });
+  //         $(".login-fields").hide();
+  //         $(".register-fields").hide();
+  //         window.top.location.reload();
+  //       }
+  //     }
+  //   });
+  // });
 
 </script>
-<td style='width:50px;'><p id='user-greeting'>yrt</p></td>
+<!-- <td style='width:50px;'><p id='user-greeting'>yrt</p></td>
 <script>
   var isLoggedIn = 1;
 
@@ -460,7 +460,7 @@ if($success!=""){
  $( document ).ready(function() {
      console.log( "ready!" );
  });
- <script>
+ <script> -->
 <?
 }
 
@@ -1472,3 +1472,21 @@ $newf=_rep($newfile,$gPath,$gRoot);
 
 
 ?>
+<script>
+
+function mintImage(img){
+ var w=window.open("","Mint","width=800,height=600,scrollbars=yes,resizable=yes");
+ w.document.write("<html><head><title>Image</title></head><body style='margin:0px;padding:0px;'>");
+ w.document.write("<img src='"+img+"' style='width:100%;height:100%;'>");
+ w.document.write("</body></html>");
+ w.document.close();
+}
+function mintVideo(vid){
+ var w=window.open("","Mint","width=800,height=600,scrollbars=yes,resizable=yes");
+ w.document.write("<html><head><title>Video</title></head><body style='margin:0px;padding:0px;'>");
+ w.document.write("<iframe src='http://www.youtube.com/embed/"+vid+"' style='width:100%;height:100%;'></iframe>");
+ w.document.write("</body></html>");
+ w.document.close();
+}
+
+</script>
